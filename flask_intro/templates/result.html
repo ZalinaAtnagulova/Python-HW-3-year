@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат</title>
+</head>
+<body>
+<h2>Спасибо за ответ, {{ name }}!</h2>
+<p>Я записала, что ты больше любишь
+    {% if animal %}
+    собак.
+    {% else %}
+    кошек.
+    {% endif %}
+</p>
+<p>Посмотри, что получается:</p>
+<p>голосовали: 
+    {% for name, votes in all_users.items() %}
+    <p>{{name}}&emsp;{{votes}}
+    {% if votes == 2 or votes == 3 or votes == 4 %}
+    разa
+    {% else %}
+    раз
+    {% endif %}</p>
+    {% endfor %}
+    {% for anim, votes in dictr.items() %}
+    <p>{{anim}}&emsp;{{votes}}
+    {% if votes == 2 or votes == 3 or votes == 4 %}
+    разa
+    {% else %}
+    раз
+    {% endif %}</p>
+    {% endfor %}
+</p>
+</p>
+</form>
+</body>
+</html>
