@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Zmystem</title>
+</head>
+<body>
+    <form method='post'>
+        <h1>Новый текст:</h1>
+        <textarea rows="8" cols="60" name="text">{{ input }}</textarea>
+        <br>
+        <input type="submit" value="Разобрать">
+    </form>
+    {% if text %}
+        <h1>Исходный текст:</h1>
+        <p class="result"><b>{{ result | safe}}</b></p>
+    {% endif %}
+        <h1>Информация о глаголах:</h1>
+        <p>Всего глаголов в тексте: {{verb_counter}}</p>
+        <p>Количество глаголов несовершенного вида: {{nesov}}</p>
+        <p>Количество глаголов совершенного вида: {{sov}}</p>
+        <p>Количество непереходных глаголов: {{intrans}}</p>
+        <p>Количество переходных глаголов: {{trans}}</p>
+        <p>Все глаголы по убыванию частотности: {% for vb in verbs%} <br><i>{{vb}}</i> {%endfor%}</p>
+</body>
+</html>
