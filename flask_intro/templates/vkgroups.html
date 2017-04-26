@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Комментаторы</title>
+</head>
+<body>
+<a href="/">На главную</a>.
+	<form method='post'>
+		<h1>Название группы (ID)</h1>
+		<input type="text" placeholder="Например, 64292596" name="group_id">
+		<br>
+		<input type="submit" value="Получить список 10 самых активных комментаторов">
+	</form>
+
+	{% if result %}
+		<h1>Группа: {{ group_id }}</h1>
+		<ul>
+		{% for person in result %}
+			<li>{{ person }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+
+</body>
+</html>
