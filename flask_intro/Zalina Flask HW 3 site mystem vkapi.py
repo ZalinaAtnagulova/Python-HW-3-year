@@ -16,7 +16,6 @@ def leaders(group):
     data = json.loads(resp_wall.text)
     arr_posts.append(data)
     for a in range(1, 10):
-        #resp_wall1 = requests.get(group_link+'&count=100&offset=100')
         data_off = json.loads(resp_wall_off.text)
         arr_posts.append(data_off)
     for one_set in arr_posts:
@@ -26,19 +25,16 @@ def leaders(group):
             command_post = comment_link+'&post_id='+str(post_id)+'&count=100&v=5.52'
             command_post_off = command_post+'&offset=100'
             if count <= 100:
-                #command_post = comment_link+'&post_id='+str(post_id)+'&count=100&v=5.52'
                 poster = json.loads(requests.get(command_post).text)
                 arr_comments.append(poster)
             else:
                 count = count - 100
                 if count <= 100:
-                    #command_post_off = comment_link+'&post_id='+str(post_id)+'&count=100&v=5.52&offset=100'
                     poster = json.loads(requests.get(command_post_off).text)
                     arr_comments.append(poster)
                 else:
                     rng = int(count/100)+1
                     for roun in range(1, rng):
-                        #command_post = group_link+'&post_id='+str(post_id)+'&count=100&v=5.52&offset=100'
                         poster = json.loads(requests.get(command_post_off).text)
                         arr_comments.append(poster)
     for cmmnt in arr_comments:
