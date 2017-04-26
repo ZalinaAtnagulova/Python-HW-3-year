@@ -1,7 +1,6 @@
 from flask import Flask
-from flask import url_for, render_template, request, redirect
+from flask import render_template, request
 from pymystem3 import Mystem
-from collections import Counter
 import json
 import requests
 
