@@ -1,13 +1,18 @@
 from flask import Flask
-from flask import render_template, request
+from flask import url_for, render_template, request, redirect
 from pymystem3 import Mystem
+from collections import Counter
 import json
 import requests
 
-def leaders(group):
+def leaders(group_name):
     ids = {}
+    leaders_dict={}
     arr_posts = []
     arr_comments = []
+    id_name_link = 'https://api.vk.com/method/groups.getById?group_id='+group_name+'&fileds=name,gid'
+    group = str(json.loads(requests.get(id_name_link).text)['response'][0]['gid'])
+    group_N = json.loads(requests.get(id_name_link).text)['response'][0]['name']
     group_link = 'https://api.vk.com/method/wall.get?owner_id=-'+group
     comment_link = 'https://api.vk.com/method/wall.getComments?owner_id=-'+group
     resp_wall = requests.get(group_link+'&count=100')
@@ -15,6 +20,7 @@ def leaders(group):
     data = json.loads(resp_wall.text)
     arr_posts.append(data)
     for a in range(1, 10):
+        #resp_wall1 = requests.get(group_link+'&count=100&offset=100')
         data_off = json.loads(resp_wall_off.text)
         arr_posts.append(data_off)
     for one_set in arr_posts:
@@ -24,16 +30,19 @@ def leaders(group):
             command_post = comment_link+'&post_id='+str(post_id)+'&count=100&v=5.52'
             command_post_off = command_post+'&offset=100'
             if count <= 100:
+                #command_post = comment_link+'&post_id='+str(post_id)+'&count=100&v=5.52'
                 poster = json.loads(requests.get(command_post).text)
                 arr_comments.append(poster)
             else:
                 count = count - 100
                 if count <= 100:
+                    #command_post_off = comment_link+'&post_id='+str(post_id)+'&count=100&v=5.52&offset=100'
                     poster = json.loads(requests.get(command_post_off).text)
                     arr_comments.append(poster)
                 else:
                     rng = int(count/100)+1
                     for roun in range(1, rng):
+                        #command_post = group_link+'&post_id='+str(post_id)+'&count=100&v=5.52&offset=100'
                         poster = json.loads(requests.get(command_post_off).text)
                         arr_comments.append(poster)
     for cmmnt in arr_comments:
@@ -46,12 +55,13 @@ def leaders(group):
     names = []
     for one in sorted(ids, key=lambda n: ids[n], reverse=True)[:10]:
         leaders.append(one)
+        leaders_dict[one]=ids[one]
     for page in leaders:
         command = 'https://api.vk.com/method/users.get?user_id='+str(page)+'&fields=first_name,last_name&v=5.52'
         req = json.loads(requests.get(command).text)
         stri = req['response'][0]['first_name']+' '+req['response'][0]['last_name']
         names.append(stri)
-    return names
+    return names, leaders_dict, group_N
 
 def fun(text):
     m = Mystem()
@@ -101,9 +111,9 @@ app = Flask(__name__)
 def commentaries():
     if request.form:
         group_id = request.form['group_id']
-        comm_lead = leaders(group_id)
-        return render_template('vkgroups.html', group_id=group_id, result=comm_lead)
-    return render_template('vkgroups.html')
+        comm_lead, leaders_dict, group_name = leaders(group_id)
+        return render_template('vkgroups.html', group_id=group_name, result=comm_lead, data=leaders_dict)
+    return render_template('vkgroups.html', data={})
 
 
 @app.route('/', methods=['get'])
