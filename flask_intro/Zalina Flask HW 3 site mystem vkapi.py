@@ -53,14 +53,19 @@ def leaders(group_name):
                 ids[cmmnt['response']['items'][pers]['from_id']] = 1
     leaders = []
     names = []
+    id_name_dic={}
+    leaders_num={}
     for one in sorted(ids, key=lambda n: ids[n], reverse=True)[:10]:
         leaders.append(one)
-        leaders_dict[one]=ids[one]
+        leaders_num[one]=ids[one]
     for page in leaders:
         command = 'https://api.vk.com/method/users.get?user_id='+str(page)+'&fields=first_name,last_name&v=5.52'
         req = json.loads(requests.get(command).text)
         stri = req['response'][0]['first_name']+' '+req['response'][0]['last_name']
         names.append(stri)
+        id_name_dic[page]=stri
+    for a in leaders_num:
+        leaders_dict[id_name_dic[a]]=leaders_num[a]
     return names, leaders_dict, group_N
 
 def fun(text):
