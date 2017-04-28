@@ -1,9 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
+  <head>
     <meta charset="UTF-8">
     <title>Комментаторы</title>
-</head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Пользователь', 'Количество комментариев'],
+          {% for pos, num in data.items() %}
+              ['{{ pos }}', {{ num }}],
+          {% endfor %}
+        ]);
+        var options = {
+          title: 'Распределение комментариев'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
 <body>
 <a href="/">На главную</a>.
 	<form method='post'>
@@ -13,8 +36,8 @@
 		<input type="submit" value="Получить список 10 самых активных комментаторов">
 		<p>Можете пока налить себе чаю, обработка запроса займет около 3 минут</p>
 	</form>
-
 	{% if result %}
+	<div id="piechart" style="width: 900px; height: 500px;"></div>
 		<h1>Группа: {{ group_id }}</h1>
 		<ul>
 		{% for person in result %}
@@ -22,6 +45,5 @@
 		{% endfor %}
 		</ul>
 	{% endif %}
-
 </body>
 </html>
