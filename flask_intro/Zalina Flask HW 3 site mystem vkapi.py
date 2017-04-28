@@ -6,61 +6,64 @@ import requests
 
 def leaders(group_name):
     ids = {}
-    leaders_dict={}
-    arr_posts = []
-    arr_comments = []
-    id_name_link = 'https://api.vk.com/method/groups.getById?group_id='+group_name+'&fileds=name,gid'
-    group = str(json.loads(requests.get(id_name_link).text)['response'][0]['gid'])
-    group_N = json.loads(requests.get(id_name_link).text)['response'][0]['name']
-    group_link = 'https://api.vk.com/method/wall.get?owner_id=-'+group
-    comment_link = 'https://api.vk.com/method/wall.getComments?owner_id=-'+group
-    resp_wall = requests.get(group_link+'&count=100')
-    resp_wall_off = requests.get(group_link+'&count=100&offset=100')
-    data = json.loads(resp_wall.text)
-    arr_posts.append(data)
-    for a in range(1, 10):
-        data_off = json.loads(resp_wall_off.text)
-        arr_posts.append(data_off)
-    for one_set in arr_posts:
-        for post in range(1, len(one_set['response'])):
-            post_id = data['response'][post]['id']
-            count = data['response'][post]['comments']['count']
-            command_post = comment_link+'&post_id='+str(post_id)+'&count=100&v=5.52'
-            command_post_off = command_post+'&offset=100'
-            if count <= 100:
-                poster = json.loads(requests.get(command_post).text)
-                arr_comments.append(poster)
-            else:
-                count = count - 100
-                if count <= 100:
-                    poster = json.loads(requests.get(command_post_off).text)
-                    arr_comments.append(poster)
-                else:
-                    rng = int(count/100)+1
-                    for roun in range(1, rng):
-                        poster = json.loads(requests.get(command_post_off).text)
-                        arr_comments.append(poster)
-    for cmmnt in arr_comments:
-        for pers in range(1,len(cmmnt['response']['items'])):
-            if cmmnt['response']['items'][pers]['from_id'] in ids:
-                ids[cmmnt['response']['items'][pers]['from_id']] += 1
-            else:
-                ids[cmmnt['response']['items'][pers]['from_id']] = 1
     leaders = []
     names = []
     id_name_dic={}
     leaders_num={}
-    for one in sorted(ids, key=lambda n: ids[n], reverse=True)[:10]:
-        leaders.append(one)
-        leaders_num[one]=ids[one]
-    for page in leaders:
-        command = 'https://api.vk.com/method/users.get?user_id='+str(page)+'&fields=first_name,last_name&v=5.52'
-        req = json.loads(requests.get(command).text)
-        stri = req['response'][0]['first_name']+' '+req['response'][0]['last_name']
-        names.append(stri)
-        id_name_dic[page]=stri
-    for a in leaders_num:
-        leaders_dict[id_name_dic[a]]=leaders_num[a]
+    leaders_dict={}
+    arr_posts = []
+    arr_comments = []
+    id_name_link = 'https://api.vk.com/method/groups.getById?group_id='+group_name+'&fileds=name,gid,is_closed'
+    if json.loads(requests.get(id_name_link).text)['response'][0]['is_closed'] is 0:
+        group = str(json.loads(requests.get(id_name_link).text)['response'][0]['gid'])
+        group_N = json.loads(requests.get(id_name_link).text)['response'][0]['name']
+        group_link = 'https://api.vk.com/method/wall.get?owner_id=-'+group
+        comment_link = 'https://api.vk.com/method/wall.getComments?owner_id=-'+group
+        resp_wall = requests.get(group_link+'&count=100')
+        resp_wall_off = requests.get(group_link+'&count=100&offset=100')
+        data = json.loads(resp_wall.text)
+        arr_posts.append(data)
+        for a in range(1, 10):
+            data_off = json.loads(resp_wall_off.text)
+            arr_posts.append(data_off)
+        for one_set in arr_posts:
+            for post in range(1, len(one_set['response'])):
+                post_id = data['response'][post]['id']
+                count = data['response'][post]['comments']['count']
+                command_post = comment_link+'&post_id='+str(post_id)+'&count=100&v=5.52'
+                command_post_off = command_post+'&offset=100'
+                if count <= 100:
+                    poster = json.loads(requests.get(command_post).text)
+                    arr_comments.append(poster)
+                else:
+                    count = count - 100
+                    if count <= 100:
+                        poster = json.loads(requests.get(command_post_off).text)
+                        arr_comments.append(poster)
+                    else:
+                        rng = int(count/100)+1
+                        for roun in range(1, rng):
+                            poster = json.loads(requests.get(command_post_off).text)
+                            arr_comments.append(poster)
+        for cmmnt in arr_comments:
+            for pers in range(1,len(cmmnt['response']['items'])):
+                if cmmnt['response']['items'][pers]['from_id'] in ids:
+                    ids[cmmnt['response']['items'][pers]['from_id']] += 1
+                else:
+                    ids[cmmnt['response']['items'][pers]['from_id']] = 1
+        for one in sorted(ids, key=lambda n: ids[n], reverse=True)[:10]:
+            leaders.append(one)
+            leaders_num[one]=ids[one]
+        for page in leaders:
+            command = 'https://api.vk.com/method/users.get?user_id='+str(page)+'&fields=first_name,last_name&v=5.52'
+            req = json.loads(requests.get(command).text)
+            stri = req['response'][0]['first_name']+' '+req['response'][0]['last_name']
+            names.append(stri)
+            id_name_dic[page]=stri
+        for a in leaders_num:
+            leaders_dict[id_name_dic[a]]=leaders_num[a]
+    else:
+        group_N = 'Простите, вы ввели ID закрытой группы, у меня нет к ней доступа'
     return names, leaders_dict, group_N
 
 def fun(text):
