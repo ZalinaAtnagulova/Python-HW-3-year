@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8">
-    <title>Комментаторы</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -44,6 +42,9 @@
 			<li>{{ person }}</li>
 		{% endfor %}
 		</ul>
+	{% endif %}
+	{% if group_id %}
+		<p>{{ group_id }}</p>
 	{% endif %}
 </body>
 </html>
