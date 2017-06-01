@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск по базе</title>
+</head>
+<body>
+<a href="/">На главную</a>.
+	<form method='post'>
+		<h1>Поиск по точной форме слова</h1>
+		<input type="text" placeholder="Например, слона" name="full_word">
+		<br>
+		<h1>Поиск по основе слова</h1>
+		<input type="text" placeholder="Например, слон" name="stem">
+		<input type="submit" value="Получить список файлов и коллокаций">
+	</form>
+	{% if names %}
+		<h1>Ваше слово есть в следующих файлах: </h1>
+		<ul>
+		{% for file in names %}
+			<li>{{ file }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+	{% if col %}
+	<h1>Частотные коллокации в нашей базе: </h1>
+	<ul>
+		{% for c in col %}
+			<li>{% for c1 in c %}
+				{{ c1 }}
+			{% endfor %}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+</body>
+</html>
