@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -23,10 +31,12 @@
         chart.draw(data, options);
       }
     </script>
+    <title>Группы</title>
   </head>
 
 <body>
-<a href="/">На главную</a>.
+<div class="container">
+<h4><a href="/">На главную</a></h4>
 	<form method='post'>
 		<h1>Название группы (ID)</h1>
 		<input type="text" placeholder="Например, 64292596, или aniplaytv" name="group_id">
@@ -34,17 +44,12 @@
 		<input type="submit" value="Получить список 10 самых активных комментаторов">
 		<p>Можете пока налить себе чаю, обработка запроса займет около 3 минут</p>
 	</form>
+	{% if group_id %}
+		<h1>Группа: {{ group_id }}</h1>
+	{% endif %}
 	{% if result %}
 	<div id="piechart" style="width: 900px; height: 500px;"></div>
-		<h1>Группа: {{ group_id }}</h1>
-		<ul>
-		{% for person in result %}
-			<li>{{ person }}</li>
-		{% endfor %}
-		</ul>
 	{% endif %}
-	{% if group_id %}
-		<p>{{ group_id }}</p>
-	{% endif %}
+</div>
 </body>
 </html>
