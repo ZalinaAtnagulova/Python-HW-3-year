@@ -9,7 +9,6 @@ import nltk
 from nltk import word_tokenize
 from nltk.stem.snowball import SnowballStemmer
 from nltk.collocations import *
-#РАБОЧИЙ НА 100% ФАЙЛ
 
 def leaders(group_name):
     ids = {}
