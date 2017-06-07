@@ -78,8 +78,10 @@ def leaders(group_name):
                 names.append(stri)
                 id_name_dic[page]=stri
             if page < 0:
-                command = 'https://api.vk.com/method/groups.getById?group_id='+group_name+'&fileds=name,gid,is_closed'
+                page1 = page*(-1)
+                command = 'https://api.vk.com/method/groups.getById?group_id='+str(page1)+'&fileds=name'
                 req = json.loads(requests.get(command).text)
+                print(req)
                 stri = req['response'][0]['name']
                 names.append(stri)
                 id_name_dic[page]=stri
