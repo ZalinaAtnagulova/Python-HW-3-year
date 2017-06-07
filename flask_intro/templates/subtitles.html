@@ -1,46 +1,99 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-<meta charset="UTF-8">
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="Атнагулова Залина">
     <title>Поиск по базе</title>
+
+
+	<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 </head>
 <body>
+<div class="navbar-wrapper">
+      <div class="container">
+
+        <nav class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">Проект для курса Python в НИУ ВШЭ</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="/">На главную</a></li>
+                <li><a href="https://github.com/ZalinaAtnagulova/Python-HW-3-year/tree/master/flask_intro">Исходный код</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
 <div class="container">
-<h4><a href="/">На главную</a></h4>
+<div class="row">
 	<form method='post'>
+	<div class="col-lg-3"></div>
+	<div class="col-lg-6">
 		<h1>Поиск по точной форме слова</h1>
-		<input type="text" placeholder="Например, слона" name="full_word">
+		<input type="text" placeholder="Например, слона" name="full_word"></div>
+		<div class="col-lg-3"></div></div>
 		<br>
+<div class="row">
+		<div class="col-lg-3"></div>
+		<div class="col-lg-6">
 		<h1>Поиск по основе слова</h1>
-		<input type="text" placeholder="Например, слон" name="stem"><br><br><br>
-		<input type="submit" value="Получить список файлов и коллокаций">
+		<input type="text" placeholder="Например, слон" name="stem"></div>
+		<div class="col-lg-3"></div></div><br><br><br>
+	<div class="row">
+		<div class="col-lg-3"></div>
+		<div class="col-lg-4"><button class="btn btn-lg btn-primary btn-block" type="submit">Получить список файлов и коллокаций</button></div>
+		<div class="col-lg-5"></div>
+	</div>
+		<br>
 	</form>
+	<div class="row">
 	{% if names %}
-		<h1>Ваше слово есть в следующих файлах: </h1>
+	<div class="col-lg-6">
+	<h2 class="sub-header">Ваше слово есть в следующих файлах:</h2>
 		<ul>
 		{% for file in names %}
 			<li>{{ file }}</li>
 		{% endfor %}
-		</ul>
+		</ul></div>
 	{% endif %}
 	{% if col %}
-	<h1>Частотные коллокации в нашей базе: </h1>
+	<div class="col-lg-6">
+	<h2 class="sub-header">Частотные коллокации в нашей базе:</h2>
 	<ul>
 		{% for c in col %}
 			<li>{% for c1 in c %}
 				{{ c1 }}
 			{% endfor %}</li>
 		{% endfor %}
-		</ul>
+		</ul></div>
 	{% endif %}
+	</div>
 </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
