@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<meta charset="UTF-8">    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="Атнагулова Залина">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -32,17 +30,51 @@
       }
     </script>
     <title>Группы</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
   </head>
 
 <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+
+        <nav class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">Проект для курса Python в НИУ ВШЭ</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="/">На главную</a></li>
+                <li><a href="https://github.com/ZalinaAtnagulova/Python-HW-3-year/tree/master/flask_intro">Исходный код</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+      </div>
+    </div>
 <div class="container">
-<h4><a href="/">На главную</a></h4>
+<div class="jumbotron">
 	<form method='post'>
-		<h1>Название группы (ID)</h1>
-		<input type="text" placeholder="Например, 64292596, или aniplaytv" name="group_id">
-		<br>
-		<input type="submit" value="Получить список 10 самых активных комментаторов">
-		<p>Можете пока налить себе чаю, обработка запроса займет около 3 минут</p>
+		<h1>Поиск по группам ВКонтакте</h1><br>
+		<!--<textarea for="inputtext" class="form-control" rows="10" name="text">{{ input }}</textarea>-->
+		<p class="lead">Если вы введёте ID или название группы как в адресной строке, вы получите список 10 самых активных комментаторов сообщества и сравнительный график распределения их комментариев. Обработка запроса занимает около 3 минут.</p>
+		<div class="row">
+		<div class="col-lg-4">
+		<input type="text" class="form-control" placeholder="Например, 64292596, или aniplaytv" name="group_id"></div>
+		<div class="col-lg-4"></div>
+		<div class="col-lg-4"></div></div><br>
+		<!--<p><a class="btn btn-lg btn-success" type="submit" role="button">Получить список 10 самых активных комментаторов</a></p>-->
+		<p><button class="btn btn-lg btn-success" type="submit">Получить</button></p>
 	</form>
 	{% if group_id %}
 		<h1>Группа: {{ group_id }}</h1>
@@ -51,5 +83,12 @@
 	<div id="piechart" style="width: 900px; height: 500px;"></div>
 	{% endif %}
 </div>
+</div>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
